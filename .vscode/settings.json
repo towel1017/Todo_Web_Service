@@ -1,0 +1,7 @@
+{
+      "editor.tokenColorCustomizations": null,
+      "editor.semanticTokenColorCustomizations": null,
+      "emmet.includeLanguages": {
+            "javascript": "html"
+      }
+}

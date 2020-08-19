@@ -1,0 +1,39 @@
+.item-wrapper {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid lightslategray;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 8px;
+}
+
+.delete {
+  flex: 0.1;
+  font-size: 18px;
+}
+
+.textbox {
+  flex: 10;
+}
+
+.todo-text {
+  color: white;
+  font-size: 18px;
+  padding-left: 12px;
+}
+
+.date {
+  margin-left: 12px;
+  color: gray;
+  font-size: 14px;
+}
+
+.checked {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.check-mark {
+  flex: 0.1;
+  color: lightgreen;
+}

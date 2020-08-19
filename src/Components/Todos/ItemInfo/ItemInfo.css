@@ -1,0 +1,40 @@
+.info-wrapper {
+  flex: 0.25;
+  border-left: 2px solid rgb(26, 29, 32);
+}
+
+.info-items {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.item {
+  flex: 1;
+  margin: 2px;
+}
+
+.step {
+  flex: 1;
+}
+
+.step-input {
+  border-radius: 5px;
+  flex: 0.4;
+  margin: 8px;
+  font-size: 18px;
+}
+
+.deleted {
+  border-top: 2px solid rgb(106, 112, 119);
+  padding: 8px;
+}
+
+.deleted:hover {
+  background-color: rgba(106, 112, 119, 0.411);
+}
+
+.deleted span {
+  color: rgb(230, 99, 99);
+  font-size: 23px;
+}
