@@ -7,6 +7,7 @@ import {
   todoCheck,
   todoImport,
   todoRemove,
+  todoInfo,
 } from "../../Redux/Actions/index";
 import { createStore } from "redux";
 import reducers from "../../Redux/Reducers/index";
@@ -27,7 +28,8 @@ class Todos extends Component {
 
   //추가(상세 단계) Redux 적용 완료 8/19
   _onCreate = (step_input) => {
-    this.stepAdd(this.state.current, step_input);
+    this.stepAdd(step_input);
+    console.log(store.getState().data);
     this.setState({});
   };
 
@@ -56,7 +58,7 @@ class Todos extends Component {
   };
   //삭제(아이템 상세정보 내에서 단계 삭제) Redux 적용 완료 8/19
   _onDelete = (stepid) => {
-    this.stepRemove(this.state.current, stepid);
+    this.stepRemove(stepid);
     this.setState({});
   };
 
@@ -68,7 +70,7 @@ class Todos extends Component {
 
   //상세 단계 완료 (onToggle)
   _onToggle = (id) => {
-    this.stepToggle(this.state.current, id);
+    this.stepToggle(id);
     this.setState({});
   };
 
@@ -83,6 +85,8 @@ class Todos extends Component {
     this.setState({
       current: store.getState().data.todoList.findIndex((val) => val.id === id),
     });
+    this.infoTodo(id);
+    this.setState({});
   };
 
   render() {
@@ -167,9 +171,10 @@ class Todos extends Component {
   checkTodo = (id) => store.dispatch(todoCheck(id));
   importTodo = (id) => store.dispatch(todoImport(id));
   removeTodo = (id) => store.dispatch(todoRemove(id));
-  stepAdd = (id, text) => store.dispatch(addStep(id, text));
-  stepRemove = (current, id) => store.dispatch(removeStep(current, id));
-  stepToggle = (current, id) => store.dispatch(toggleStep(current, id));
+  infoTodo = (id) => store.dispatch(todoInfo(id));
+  stepAdd = (text) => store.dispatch(addStep(text));
+  stepRemove = (id) => store.dispatch(removeStep(id));
+  stepToggle = (id) => store.dispatch(toggleStep(id));
 }
 
 export default Todos;

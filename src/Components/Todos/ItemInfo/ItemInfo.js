@@ -69,8 +69,8 @@ class ItemInfo extends Component {
               onInfo={() => {}}
               onImportant={onImportant}
             />
-            {stepList}
           </div>
+          <div className="step">{stepList}</div>
           <input
             className="step-input"
             name="todo_val"

@@ -1,12 +1,14 @@
 .info-wrapper {
   flex: 0.25;
   border-left: 2px solid rgb(26, 29, 32);
+  overflow: auto;
 }
 
 .info-items {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: auto;
 }
 
 .item {
@@ -15,7 +17,7 @@
 }
 
 .step {
-  flex: 1;
+  overflow: auto;
 }
 
 .step-input {

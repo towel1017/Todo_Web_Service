@@ -3,6 +3,7 @@ import {
   Todo_CHECK,
   Todo_IMPORT,
   Todo_REMOVE,
+  Todo_INFO,
 } from "../Actions/index";
 import { combineReducers } from "redux";
 import { Step_ADD, Step_REMOVE, Step_TOGGLE } from "../Actions/indexStep";
@@ -57,19 +58,17 @@ const data = (state = initState, action) => {
       return Object.assign({}, state, {
         todoList: state.todoList.filter((item) => item.id !== action.id),
       });
-    default:
-      return state;
-  }
-};
-
-const stepData = (state = initState, action) => {
-  switch (action.type) {
+    case Todo_INFO:
+      return Object.assign({}, state, {
+        current: state.todoList.findIndex((item) => item.id === action.id),
+      });
     case Step_ADD:
+      console.log(state);
       return Object.assign({}, state, {
         todoList: state.todoList.map((item) => {
-          if (item.id === action.id + 1) {
-            item.step = state.todoList[action.id].step.concat({
-              _id: state.todoList[action.id].step.length + 1,
+          if (item.id === state.todoList[state.current].id) {
+            item.step = state.todoList[state.current].step.concat({
+              _id: state.todoList[state.current].step.length + 1,
               _text: action.text,
               _checked: false,
             });
@@ -80,8 +79,8 @@ const stepData = (state = initState, action) => {
     case Step_REMOVE:
       return Object.assign({}, state, {
         todoList: state.todoList.map((item) => {
-          if (item.id === action.current + 1) {
-            item.step = state.todoList[action.current].step.filter(
+          if (item.id === state.todoList[state.current].id) {
+            item.step = state.todoList[state.current].step.filter(
               (val) => val._id !== action.id
             );
           }
@@ -91,8 +90,8 @@ const stepData = (state = initState, action) => {
     case Step_TOGGLE:
       return Object.assign({}, state, {
         todoList: state.todoList.map((item) => {
-          if (item.id === action.current + 1) {
-            item.step = state.todoList[action.current].step.map((val) => {
+          if (item.id === state.todoList[state.current].id) {
+            item.step = state.todoList[state.current].step.map((val) => {
               if (val._id === action.id) {
                 val._checked = !val._checked;
               }
@@ -109,7 +108,6 @@ const stepData = (state = initState, action) => {
 
 const App = combineReducers({
   data,
-  stepData,
 });
 
 export default App;
