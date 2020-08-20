@@ -54,7 +54,9 @@ class Todos extends Component {
   //삭제 (todoList-item) Redux 적용 완료 8/19
   onDelete = (id) => {
     this.removeTodo(id);
-    this.setState({});
+    this.setState({
+      current: 0,
+    });
   };
   //삭제(아이템 상세정보 내에서 단계 삭제) Redux 적용 완료 8/19
   _onDelete = (stepid) => {
@@ -82,10 +84,10 @@ class Todos extends Component {
 
   //상세 정보 보기 Redux 적용 완료 8/19
   onInfo = (id) => {
+    this.infoTodo(id);
     this.setState({
       current: store.getState().data.todoList.findIndex((val) => val.id === id),
     });
-    this.infoTodo(id);
     this.setState({});
   };
 

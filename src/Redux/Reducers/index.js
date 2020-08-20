@@ -12,7 +12,6 @@ let id = 2;
 
 const initState = {
   current: 0,
-  input_text: "",
   todoList: [
     {
       id: 1,
@@ -77,6 +76,7 @@ const data = (state = initState, action) => {
         }),
       });
     case Step_REMOVE:
+      console.log(state.current);
       return Object.assign({}, state, {
         todoList: state.todoList.map((item) => {
           if (item.id === state.todoList[state.current].id) {
