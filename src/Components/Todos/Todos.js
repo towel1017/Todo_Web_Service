@@ -8,10 +8,12 @@ import {
   todoImport,
   todoRemove,
   todoInfo,
+  todoDate,
 } from "../../Redux/Actions/index";
 import { createStore } from "redux";
 import reducers from "../../Redux/Reducers/index";
 import { addStep, removeStep, toggleStep } from "../../Redux/Actions/indexStep";
+import { connect } from "react-redux";
 //store 연결
 const store = createStore(reducers);
 
@@ -26,11 +28,18 @@ class Todos extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.store) {
+      alert(prevProps.value);
+      this.setState({});
+    }
+  }
+
   //추가(상세 단계) Redux 적용 완료 8/19
   _onCreate = (step_input) => {
     this.stepAdd(step_input);
-    console.log(store.getState().data);
     this.setState({});
+    console.log(store.getState().data);
   };
 
   //텍스트 변경 (Redux 완료) 8/19
@@ -88,19 +97,22 @@ class Todos extends Component {
     this.setState({
       current: store.getState().data.todoList.findIndex((val) => val.id === id),
     });
+  };
+  //기한 변경
+  onChangeDate = (num) => {
+    this.dateTodo(num);
     this.setState({});
   };
-
   render() {
-    console.log("render");
     const initialState = store.getState().data;
     const list = initialState.todoList.map(
-      ({ id, text, checked, important, step }) => (
+      ({ id, text, checked, important, date, step }) => (
         <TodoItem
           key={id}
           id={id}
           text={text}
           checked={checked}
+          date={date}
           step={step}
           important={important}
           onImportant={this.onImportant}
@@ -124,20 +136,28 @@ class Todos extends Component {
           </div>
         );
       } else {
-        const { id, text, checked, important, step } = initialState.todoList[
-          this.state.current
-        ];
+        const {
+          id,
+          text,
+          checked,
+          important,
+          date,
+          step,
+        } = initialState.todoList[this.state.current];
         return (
           <ItemInfo
             id={id}
             text={text}
             checked={checked}
             important={important}
+            date={date}
             onToggle={this.onToggle}
             onImportant={this.onImportant}
             step={step}
             onDelete={this.onDelete}
+            onDateChange={this.onChangeDate}
             _onDelete={this._onDelete}
+            _oftifined
             _onCreate={this._onCreate}
             _onToggle={this._onToggle}
           />
@@ -173,10 +193,24 @@ class Todos extends Component {
   checkTodo = (id) => store.dispatch(todoCheck(id));
   importTodo = (id) => store.dispatch(todoImport(id));
   removeTodo = (id) => store.dispatch(todoRemove(id));
+  dateTodo = (text) => store.dispatch(todoDate(text));
   infoTodo = (id) => store.dispatch(todoInfo(id));
   stepAdd = (text) => store.dispatch(addStep(text));
   stepRemove = (id) => store.dispatch(removeStep(id));
   stepToggle = (id) => store.dispatch(toggleStep(id));
 }
 
-export default Todos;
+export default connect(
+  (state) => ({ todoList: store.getState().data.todoList }),
+  {
+    todoAdd,
+    todoCheck,
+    todoImport,
+    todoRemove,
+    todoInfo,
+    todoDate,
+    addStep,
+    removeStep,
+    toggleStep,
+  }
+)(Todos);

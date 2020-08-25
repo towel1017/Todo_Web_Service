@@ -3,6 +3,7 @@ export const Todo_CHECK = "Todo_CHECK";
 export const Todo_IMPORT = "Todo_IMPORT";
 export const Todo_REMOVE = "Todo_REMOVE";
 export const Todo_INFO = "Todo_INFO";
+export const Todo_DATE = "Todo_DATE";
 
 export const todoAdd = (text) => {
   return {
@@ -36,5 +37,11 @@ export const todoInfo = (id) => {
   return {
     type: Todo_INFO,
     id,
+  };
+};
+export const todoDate = (text) => {
+  return {
+    type: Todo_DATE,
+    text,
   };
 };

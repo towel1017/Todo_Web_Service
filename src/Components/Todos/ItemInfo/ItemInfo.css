@@ -27,6 +27,43 @@
   font-size: 18px;
 }
 
+.calender {
+  padding: 8px;
+}
+
+.calender>span {
+  color: rgb(146, 146, 146);
+}
+
+.calender:hover {
+  background-color: rgba(106, 112, 119, 0.411);
+}
+
+hr {
+  border-color: rgb(117, 117, 117);
+}
+
+.checkBox {
+
+  border: 1px solid rgb(117, 117, 117);
+  margin: 5px;
+}
+
+.checkBox>div {
+  color: rgba(141, 141, 141, 0.932);
+  padding: 3px;
+}
+
+.close {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.checkBox>div:hover {
+  background-color: rgba(106, 112, 119, 0.411);
+}
+
 .deleted {
   border-top: 2px solid rgb(106, 112, 119);
   padding: 8px;

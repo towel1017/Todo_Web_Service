@@ -4,6 +4,7 @@ import {
   Todo_IMPORT,
   Todo_REMOVE,
   Todo_INFO,
+  Todo_DATE,
 } from "../Actions/index";
 import { combineReducers } from "redux";
 import { Step_ADD, Step_REMOVE, Step_TOGGLE } from "../Actions/indexStep";
@@ -18,6 +19,7 @@ const initState = {
       text: "todolist 반 완료하기",
       checked: false,
       important: false,
+      date: "오늘",
       step: [{ _id: 1, _text: "안녕!", _checked: true }],
     },
   ],
@@ -32,6 +34,7 @@ const data = (state = initState, action) => {
           text: action.text,
           checked: false,
           important: false,
+          date: "오늘",
           step: [],
         }),
       });
@@ -97,6 +100,15 @@ const data = (state = initState, action) => {
               }
               return val;
             });
+          }
+          return item;
+        }),
+      });
+    case Todo_DATE:
+      return Object.assign({}, state, {
+        todoList: state.todoList.map((item) => {
+          if (item.id === state.todoList[state.current].id) {
+            item.date = action.text;
           }
           return item;
         }),

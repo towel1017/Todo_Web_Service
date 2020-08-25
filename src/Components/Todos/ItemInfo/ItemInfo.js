@@ -8,8 +8,22 @@ class ItemInfo extends Component {
     super(props);
     this.state = {
       step_input: "",
+      open: false,
     };
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.store) {
+      alert(prevProps.value);
+      this.setState({});
+    }
+  }
+  //Animation
+  onMenuOpen = () => {
+    this.setState({
+      open: !this.state.open,
+    });
+  };
+
   //단계 추가 Input 변경시 호출함수
   onChange = (e) => {
     this.setState({
@@ -31,6 +45,10 @@ class ItemInfo extends Component {
       }
     }
   };
+  onChangeDate = (text) => {
+    console.log(text);
+    this.props.onDateChange(text);
+  };
   render() {
     const {
       id,
@@ -38,6 +56,7 @@ class ItemInfo extends Component {
       checked,
       step,
       important,
+      date,
       onToggle,
       onImportant,
       onDelete,
@@ -65,6 +84,7 @@ class ItemInfo extends Component {
               checked={checked}
               step={step}
               important={important}
+              date={date}
               onToggle={onToggle}
               onInfo={() => {}}
               onImportant={onImportant}
@@ -79,6 +99,41 @@ class ItemInfo extends Component {
             onChange={this.onChange}
             onKeyPress={this.onKeyPress}
           />
+          <div className="calender" onClick={this.onMenuOpen}>
+            <span role="img" aria-label="calender">
+              📅 기한
+            </span>
+          </div>
+          <div className={`checkBox ${this.state.open ? "" : "close"}`}>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                this.onChangeDate("오늘");
+              }}
+            >
+              오늘
+            </div>
+            <hr />
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                this.onChangeDate("내일");
+              }}
+            >
+              내일
+            </div>
+            <hr />
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                this.onChangeDate("이번 주");
+              }}
+            >
+              이번 주
+            </div>
+            <hr />
+            <div>기한 선택</div>
+          </div>
           <div
             className="item deleted"
             onClick={(e) => {
