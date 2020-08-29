@@ -6,7 +6,6 @@ import {
   Todo_INFO,
   Todo_DATE,
 } from "../Actions/index";
-import { combineReducers } from "redux";
 import { Step_ADD, Step_REMOVE, Step_TOGGLE } from "../Actions/indexStep";
 
 let id = 2;
@@ -25,7 +24,7 @@ const initState = {
   ],
 };
 
-const data = (state = initState, action) => {
+const reducer = (state = initState, action) => {
   switch (action.type) {
     case Todo_ADD:
       return Object.assign({}, state, {
@@ -118,8 +117,4 @@ const data = (state = initState, action) => {
   }
 };
 
-const App = combineReducers({
-  data,
-});
-
-export default App;
+export { initState, reducer };
