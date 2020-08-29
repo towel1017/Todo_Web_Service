@@ -1,19 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ImpItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <div>
-        <div>
-          <span role="img" aria-label="today"></span>
-        </div>
-      </div>
-    );
-  }
-}
+const ImpItem = () => {
+  return (
+    <div>
+      <div></div>
+    </div>
+  );
+};
 
 export default ImpItem;

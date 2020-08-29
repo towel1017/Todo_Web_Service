@@ -1,13 +1,4 @@
-.todos-wrapper {
-  flex: 8;
-  background-color: #252525;
-  color: white;
-  overflow: auto;
-  display: flex;
-  flex-direction: row;
-}
-
-.todo-container {
+/* .todo-container {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -41,4 +32,4 @@ span {
   flex: 0.4;
   margin: 8px;
   font-size: 18px;
-}
+} */

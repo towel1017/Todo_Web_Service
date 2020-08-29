@@ -1,6 +1,5 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import "./Todos.css";
-import TodoItem from "./TodoItem/TodoItem";
 import ItemInfo from "./ItemInfo/ItemInfo";
 import {
   todoAdd,
@@ -12,92 +11,42 @@ import {
 } from "../../Redux/Actions/index";
 import { addStep, removeStep, toggleStep } from "../../Redux/Actions/indexStep";
 import { initState, reducer } from "../../Redux/Reducers/index";
+import TodoInput from "./TodoInput/TodoInput";
+import TodoList from "./TodoList/TodoList";
+import styled from "styled-components";
 
+const TodosWrapper = styled.div`
+  flex: 8;
+  background-color: #252525;
+  color: white;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+`;
+const TodosContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 100%;
+  flex: 0.8;
+`;
+const TodosHeader = styled.div`
+  flex: 0.4;
+  border-bottom: 0.5px solid lightgray;
+  margin: 8px;
+  font-size: 21px;
+  span {
+    text-decoration: none;
+    color: black;
+    font-size: 21px;
+  }
+`;
 const Todos = () => {
-  const [input, setInput] = useState("");
   const [state, dispatch] = useReducer(reducer, initState);
-  /**
-  추가(상세 단계) Redux 적용 완료 8/19
-  _onCreate = (step_input) => {
-    stepAdd(step_input);
-    this.setState({});
-    console.log(store.getState().data);
-  };
 
-  텍스트 변경 (Redux 완료) 8/19
-  onChange = (e) => {
-    this.setState({
-      input_text: e.target.value,
-    });
-  };
-
-  엔터키 Create 적용 (Redux 완료) 8/19
-  onKeyPress = (e) => {
-    if (e.key === "Enter") {
-      // 엔터키가 눌렸을 때 실행할 내용
-      this.addTodo();
-      this.setState({
-        input_text: "",
-      });
-    }
-  };
-
-  삭제 (todoList-item) Redux 적용 완료 8/19
-  onDelete = (id) => {
-    this.removeTodo(id);
-    this.setState({
-      current: 0,
-    });
-  };
-  삭제(아이템 상세정보 내에서 단계 삭제) Redux 적용 완료 8/19
-  _onDelete = (stepid) => {
-    this.stepRemove(stepid);
-    this.setState({});
-  };
-
-  완료 (onToggle Redux 완료) 8/19
-  onToggle = (id) => {
-    this.checkTodo(id);
-    this.setState({});
-  };
-
-  상세 단계 완료 (onToggle)
-  _onToggle = (id) => {
-    this.stepToggle(id);
-    this.setState({});
-  };
-
-  중요 Redux 적용 완료 8/19
-  onImportant = (id) => {
-    this.importTodo(id);
-    this.setState({});
-  };
-
-  상세 정보 보기 Redux 적용 완료 8/19
-  onInfo = (id) => {
-    this.infoTodo(id);
-    this.setState({
-      current: store.getState().data.todoList.findIndex((val) => val.id === id),
-    });
-  };
-  기한 변경
-  onChangeDate = (num) => {
-    this.dateTodo(num);
-    this.setState({});
-  };
-*/
-
-  //onChange
-  const onChange = (e) => {
-    const { value } = e.target;
-    setInput(value);
-  };
-  const onKeyPress = (e) => {
-    if (e.key === "Enter") {
-      // 엔터키가 눌렸을 때 실행할 내용
-      dispatch(todoAdd(input));
-      setInput("");
-    }
+  const onCreate = (text) => {
+    dispatch(todoAdd(text));
   };
   const onToggle = (id) => {
     dispatch(todoCheck(id));
@@ -124,22 +73,6 @@ const Todos = () => {
   const _onToggle = (id) => {
     dispatch(toggleStep(id));
   };
-  const list = state.todoList.map(
-    ({ id, text, checked, important, date, step }) => (
-      <TodoItem
-        key={id}
-        id={id}
-        text={text}
-        checked={checked}
-        date={date}
-        step={step}
-        important={important}
-        onImportant={onImportant}
-        onInfo={onInfo}
-        onToggle={onToggle}
-      />
-    )
-  );
 
   const clicks = () => {
     if (state.todoList.length === 0) {
@@ -155,19 +88,12 @@ const Todos = () => {
         </div>
       );
     } else {
-      const { id, text, checked, important, date, step } = state.todoList[
-        state.current
-      ];
+      const item = state.todoList[state.current];
       return (
         <ItemInfo
-          id={id}
-          text={text}
-          checked={checked}
-          important={important}
-          date={date}
+          todoList={item}
           onToggle={onToggle}
           onImportant={onImportant}
-          step={step}
           onDelete={onDelete}
           onDateChange={onChangeDate}
           _onDelete={_onDelete}
@@ -178,26 +104,19 @@ const Todos = () => {
     }
   };
   return (
-    <div className="todos-wrapper">
-      <div className="todo-container">
-        <div className="header">
-          <span role="img" aria-label="today">
-            ⏰
-          </span>
-          오늘 할 일
-        </div>
-        <div className="list">{list}</div>
-        <input
-          className="plus-input"
-          name="todo_val"
-          placeholder=" + 오늘 까지인 작업 추가하기!"
-          value={input}
-          onChange={onChange}
-          onKeyPress={onKeyPress}
+    <TodosWrapper>
+      <TodosContainer>
+        <TodosHeader role="img">⏰ 오늘 할 일</TodosHeader>
+        <TodoList
+          todoList={state.todoList}
+          onImportant={onImportant}
+          onInfo={onInfo}
+          onToggle={onToggle}
         />
-      </div>
+        <TodoInput onCreate={onCreate} />
+      </TodosContainer>
       {clicks()}
-    </div>
+    </TodosWrapper>
   );
 };
 

@@ -1,57 +1,50 @@
 import React from "react";
-import "./TodoItem.css";
+import { ItemWrapper, DeleteButton, InfoBox } from "./TodoItemStyle";
 
-const TodoItem = ({
-  id,
-  text,
-  checked,
-  step,
-  important,
-  date,
-  onInfo,
-  onToggle,
-  onImportant,
-}) => (
-  <div className="item-wrapper">
-    <div className="delete">
+const TodoItem = ({ todoList, onInfo, onToggle, onImportant }) => {
+  const { id, text, checked, step, important, date } = todoList;
+  return (
+    <ItemWrapper>
+      <DeleteButton>
+        <span
+          role="img"
+          aria-label="delete"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggle(id);
+          }}
+        >
+          {checked ? "✅" : "⬛"}
+        </span>
+      </DeleteButton>
+      <InfoBox
+        onClick={(e) => {
+          e.preventDefault();
+          onInfo(id);
+        }}
+        checked={checked}
+      >
+        <span className="todo-text">{text}</span>
+        <br />
+        <span className="date">기한 : {date}</span>
+        <span className="date">
+          단계 : {step.filter((val) => val._checked === true).length}/
+          {step.length}
+        </span>
+      </InfoBox>
       <span
         role="img"
-        aria-label="delete"
+        aria-label="important"
+        className="check-mark"
         onClick={(e) => {
-          e.stopPropagation();
-          onToggle(id);
+          e.preventDefault();
+          onImportant(id);
         }}
       >
-        {checked ? "✅" : "⬛"}
+        {important ? "🔆" : "⚫"}
       </span>
-    </div>
-    <div
-      onClick={(e) => {
-        e.preventDefault();
-        onInfo(id);
-      }}
-      className="textbox"
-    >
-      <span className={`todo-text ${checked && "checked"}`}>{text}</span>
-      <br />
-      <span className="date">기한 : {date}</span>
-      <span className="date">
-        단계 : {step.filter((val) => val._checked === true).length}/
-        {step.length}
-      </span>
-    </div>
-    <span
-      role="img"
-      aria-label="important"
-      className="check-mark"
-      onClick={(e) => {
-        e.preventDefault();
-        onImportant(id);
-      }}
-    >
-      {important ? "🔆" : "⚫"}
-    </span>
-  </div>
-);
+    </ItemWrapper>
+  );
+};
 
 export default TodoItem;

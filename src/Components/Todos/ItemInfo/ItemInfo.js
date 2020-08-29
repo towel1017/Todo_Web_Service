@@ -5,12 +5,7 @@ import StepInfo from "./StepList/StepItem";
 import { useState } from "react";
 
 const ItemInfo = ({
-  id,
-  text,
-  checked,
-  step,
-  important,
-  date,
+  todoList,
   onToggle,
   onImportant,
   onDelete,
@@ -21,7 +16,7 @@ const ItemInfo = ({
 }) => {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
-
+  const { id, step } = todoList;
   //Animation
   const onMenuOpen = () => {
     setOpen(!open);
@@ -64,12 +59,7 @@ const ItemInfo = ({
       <div className="info-items">
         <div className="item info">
           <TodoItem
-            id={id}
-            text={text}
-            checked={checked}
-            step={step}
-            important={important}
-            date={date}
+            todoList={todoList}
             onToggle={onToggle}
             onInfo={() => {}}
             onImportant={onImportant}
