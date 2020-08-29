@@ -58,6 +58,7 @@ const reducer = (state = initState, action) => {
     case Todo_REMOVE:
       return Object.assign({}, state, {
         todoList: state.todoList.filter((item) => item.id !== action.id),
+        current: 0,
       });
     case Todo_INFO:
       return Object.assign({}, state, {
