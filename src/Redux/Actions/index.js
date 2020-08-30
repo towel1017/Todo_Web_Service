@@ -5,10 +5,11 @@ export const Todo_REMOVE = "Todo_REMOVE";
 export const Todo_INFO = "Todo_INFO";
 export const Todo_DATE = "Todo_DATE";
 
-export const todoAdd = (text) => {
+export const todoAdd = (text, flag) => {
   return {
     type: Todo_ADD,
     text,
+    flag,
   };
 };
 

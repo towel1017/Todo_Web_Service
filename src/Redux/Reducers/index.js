@@ -8,10 +8,11 @@ import {
 } from "../Actions/index";
 import { Step_ADD, Step_REMOVE, Step_TOGGLE } from "../Actions/indexStep";
 
-let id = 2;
+let id = 3;
 
 const initState = {
   current: 0,
+  i_current: 0,
   todoList: [
     {
       id: 1,
@@ -21,22 +22,43 @@ const initState = {
       date: "오늘",
       step: [{ _id: 1, _text: "안녕!", _checked: true }],
     },
+    {
+      id: 2,
+      text: "어머어머 이건 중요하다구",
+      checked: false,
+      important: true,
+      date: "오늘",
+      step: [{ _id: 1, _text: "안녕!", _checked: true }],
+    },
   ],
 };
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case Todo_ADD:
-      return Object.assign({}, state, {
-        todoList: state.todoList.concat({
-          id: id++,
-          text: action.text,
-          checked: false,
-          important: false,
-          date: "오늘",
-          step: [],
-        }),
-      });
+      if (action.flag) {
+        return Object.assign({}, state, {
+          todoList: state.todoList.concat({
+            id: id++,
+            text: action.text,
+            checked: false,
+            important: true,
+            date: "오늘",
+            step: [],
+          }),
+        });
+      } else {
+        return Object.assign({}, state, {
+          todoList: state.todoList.concat({
+            id: id++,
+            text: action.text,
+            checked: false,
+            important: false,
+            date: "오늘",
+            step: [],
+          }),
+        });
+      }
     case Todo_CHECK:
       return Object.assign({}, state, {
         todoList: state.todoList.map((item) => {
@@ -61,9 +83,15 @@ const reducer = (state = initState, action) => {
         current: 0,
       });
     case Todo_INFO:
-      return Object.assign({}, state, {
-        current: state.todoList.findIndex((item) => item.id === action.id),
-      });
+      if (action.flag) {
+        return Object.assign({}, state, {
+          i_current: state.todoList.findIndex((item) => item.id === action.id),
+        });
+      } else {
+        return Object.assign({}, state, {
+          current: state.todoList.findIndex((item) => item.id === action.id),
+        });
+      }
     case Step_ADD:
       console.log(state);
       return Object.assign({}, state, {

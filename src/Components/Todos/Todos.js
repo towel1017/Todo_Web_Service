@@ -1,5 +1,4 @@
-import React, { useReducer } from "react";
-import "./Todos.css";
+import React from "react";
 import ItemInfo from "./ItemInfo/ItemInfo";
 import {
   todoAdd,
@@ -10,43 +9,17 @@ import {
   todoDate,
 } from "../../Redux/Actions/index";
 import { addStep, removeStep, toggleStep } from "../../Redux/Actions/indexStep";
-import { initState, reducer } from "../../Redux/Reducers/index";
 import TodoInput from "./TodoInput/TodoInput";
 import TodoList from "./TodoList/TodoList";
-import styled from "styled-components";
+import { useTodoDispatch, useTodoState } from "../../Context/TodoContext";
+import { TodosWrapper, TodosContainer, TodosHeader } from "./TodosStyle";
 
-const TodosWrapper = styled.div`
-  flex: 8;
-  background-color: #252525;
-  color: white;
-  overflow: auto;
-  display: flex;
-  flex-direction: row;
-`;
-const TodosContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  height: 100%;
-  flex: 0.8;
-`;
-const TodosHeader = styled.div`
-  flex: 0.4;
-  border-bottom: 0.5px solid lightgray;
-  margin: 8px;
-  font-size: 21px;
-  span {
-    text-decoration: none;
-    color: black;
-    font-size: 21px;
-  }
-`;
 const Todos = () => {
-  const [state, dispatch] = useReducer(reducer, initState);
+  const dispatch = useTodoDispatch();
+  const state = useTodoState();
 
   const onCreate = (text) => {
-    dispatch(todoAdd(text));
+    dispatch(todoAdd(text, 0));
   };
   const onToggle = (id) => {
     dispatch(todoCheck(id));
@@ -58,9 +31,8 @@ const Todos = () => {
     dispatch(todoDate(text));
   };
   const onInfo = (id) => {
-    dispatch(todoInfo(id));
+    dispatch(todoInfo(id, 0));
   };
-  //onImportant
   const onImportant = (id) => {
     dispatch(todoImport(id));
   };
@@ -106,7 +78,11 @@ const Todos = () => {
   return (
     <TodosWrapper>
       <TodosContainer>
-        <TodosHeader role="img">⏰ 오늘 할 일</TodosHeader>
+        <TodosHeader>
+          <span role="img" aria-label="">
+            ⏰ 오늘 할 일
+          </span>
+        </TodosHeader>
         <TodoList
           todoList={state.todoList}
           onImportant={onImportant}

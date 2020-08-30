@@ -1,21 +1,26 @@
 import React from "react";
-import { ItemWrapper, DeleteButton, InfoBox } from "./TodoItemStyle";
+import {
+  ItemWrapper,
+  DeleteButton,
+  InfoBox,
+  TodoText,
+  TodoInfo,
+  Important,
+} from "./TodoItemStyle";
 
 const TodoItem = ({ todoList, onInfo, onToggle, onImportant }) => {
   const { id, text, checked, step, important, date } = todoList;
   return (
     <ItemWrapper>
-      <DeleteButton>
-        <span
-          role="img"
-          aria-label="delete"
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggle(id);
-          }}
-        >
-          {checked ? "✅" : "⬛"}
-        </span>
+      <DeleteButton
+        role="img"
+        aria-label="delete"
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle(id);
+        }}
+      >
+        {checked ? "✅" : "⬛"}
       </DeleteButton>
       <InfoBox
         onClick={(e) => {
@@ -24,25 +29,23 @@ const TodoItem = ({ todoList, onInfo, onToggle, onImportant }) => {
         }}
         checked={checked}
       >
-        <span className="todo-text">{text}</span>
+        <TodoText>{text}</TodoText>
         <br />
-        <span className="date">기한 : {date}</span>
-        <span className="date">
+        <TodoInfo>기한 : {date}</TodoInfo>
+        <TodoInfo>
           단계 : {step.filter((val) => val._checked === true).length}/
           {step.length}
-        </span>
+        </TodoInfo>
       </InfoBox>
-      <span
+      <Important
         role="img"
-        aria-label="important"
-        className="check-mark"
         onClick={(e) => {
           e.preventDefault();
           onImportant(id);
         }}
       >
         {important ? "🔆" : "⚫"}
-      </span>
+      </Important>
     </ItemWrapper>
   );
 };

@@ -1,5 +1,14 @@
 import React from "react";
-import "./ItemInfo.css";
+import {
+  InfoWrapper,
+  SelectedItem,
+  InfoItems,
+  StepList,
+  StepInput,
+  DatePicker,
+  PickerItems,
+  DeletedButton,
+} from "./ItemInfoStyle";
 import TodoItem from "../TodoItem/TodoItem";
 import StepInfo from "./StepList/StepItem";
 import { useState } from "react";
@@ -54,63 +63,48 @@ const ItemInfo = ({
       />
     ) : null
   );
+  const dateArr = ["오늘", "내일", "이번 주"];
+  const dateList = dateArr.map((date) => (
+    <>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          onChangeDate(date);
+        }}
+      >
+        {date}
+      </div>
+      <hr />
+    </>
+  ));
   return (
-    <div className="info-wrapper">
-      <div className="info-items">
-        <div className="item info">
+    <InfoWrapper>
+      <InfoItems>
+        <SelectedItem>
           <TodoItem
             todoList={todoList}
             onToggle={onToggle}
-            onInfo={() => {}}
             onImportant={onImportant}
           />
-        </div>
-        <div className="step">{stepList}</div>
-        <input
-          className="step-input"
+        </SelectedItem>
+        <StepList>{stepList}</StepList>
+        <StepInput
           name="todo_val"
           placeholder=" + 단계 추가하기!"
           value={input}
           onChange={onChange}
           onKeyPress={onKeyPress}
         />
-        <div className="calender" onClick={onMenuOpen}>
+        <DatePicker onClick={onMenuOpen}>
           <span role="img" aria-label="calender">
             📅 기한
           </span>
-        </div>
-        <div className={`checkBox ${open ? "" : "close"}`}>
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              onChangeDate("오늘");
-            }}
-          >
-            오늘
-          </div>
-          <hr />
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              onChangeDate("내일");
-            }}
-          >
-            내일
-          </div>
-          <hr />
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              onChangeDate("이번 주");
-            }}
-          >
-            이번 주
-          </div>
-          <hr />
+        </DatePicker>
+        <PickerItems open={open}>
+          {dateList}
           <div>기한 선택</div>
-        </div>
-        <div
-          className="item deleted"
+        </PickerItems>
+        <DeletedButton
           onClick={(e) => {
             e.preventDefault();
             onDelete(id);
@@ -119,9 +113,9 @@ const ItemInfo = ({
           <span role="img" aria-label="delete">
             🗑 삭제
           </span>
-        </div>
-      </div>
-    </div>
+        </DeletedButton>
+      </InfoItems>
+    </InfoWrapper>
   );
 };
 
