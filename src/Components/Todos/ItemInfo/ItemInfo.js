@@ -119,4 +119,4 @@ const ItemInfo = ({
   );
 };
 
-export default ItemInfo;
+export default React.memo(ItemInfo);

@@ -39,4 +39,4 @@ const Sidebar = () => {
     </SideBarWrapper>
   );
 };
-export default Sidebar;
+export default React.memo(Sidebar);

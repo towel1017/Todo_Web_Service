@@ -39,4 +39,4 @@ const StepInfo = ({ id, text, checked, _onToggle, _onDelete }) => {
   );
 };
 
-export default StepInfo;
+export default React.memo(StepInfo);

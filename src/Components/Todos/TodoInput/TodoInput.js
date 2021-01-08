@@ -20,7 +20,12 @@ const TodoInput = ({ onCreate }) => {
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       // 엔터키가 눌렸을 때 실행할 내용
-      onCreate(input);
+      var blank_pattern = /^\s+|\s+$/g;
+      if (input === "" || input.replace(blank_pattern, "") === "") {
+        alert("내용을 입력해주세요");
+      } else {
+        onCreate(input);
+      }
       setInput("");
     }
   };
@@ -35,4 +40,4 @@ const TodoInput = ({ onCreate }) => {
     />
   );
 };
-export default TodoInput;
+export default React.memo(TodoInput);
