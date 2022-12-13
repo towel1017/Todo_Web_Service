@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "discord.js": "12.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-generator": "^4.16.1",
     "exrpess": "0.0.1-security",
     "map": "^1.0.1",
